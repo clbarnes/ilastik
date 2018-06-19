@@ -128,6 +128,7 @@ class TestHeadlessWorkflowStartupProjectCreation(object):
         # no errors -> everything should be cool
 
     def check_cache_manager_started(self):
+        """Check whether the cache manager thread is initialized"""
         import lazyflow
         from lazyflow.operators.cacheMemoryManager import CacheMemoryManager
         assert CacheMemoryManager._initialized, "CacheMemoryManager was not initialized: caches will not be purged"
