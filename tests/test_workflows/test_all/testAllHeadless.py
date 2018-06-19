@@ -120,7 +120,15 @@ class TestHeadlessWorkflowStartupProjectCreation(object):
         parsed_args, workflow_cmdline_args = ilastik_main.parser.parse_known_args()
         shell = ilastik_main.main(
             parsed_args=parsed_args, workflow_cmdline_args=workflow_cmdline_args, init_logging=False)
+        
+        self.check_cache_manager_started()
 
         shell.closeCurrentProject()
 
         # no errors -> everything should be cool
+
+    def check_cache_manager_started(self):
+        import lazyflow
+        from lazyflow.operators.cacheMemoryManager import CacheMemoryManager
+        assert CacheMemoryManager._initialized, "CacheMemoryManager was not initialized: caches will not be purged"
+
